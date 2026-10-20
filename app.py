@@ -162,16 +162,116 @@ Disallow: /archive-maint/
 @app.get("/archive-maint/CHR-05/manifest.json")
 def incident_manifest():
     return jsonify({
-        "incident": "CHR-05",
+         "incident": "CHR-05",
         "service": "chronos-legacy",
         "status_api": "/api/v1/chronos/status",
         "timeline_log": "/archive-maint/CHR-05/timeline.log",
+        "technician_note": (
+            "/archive-maint/CHR-05/notes/clock-drift.txt"
+        ),
+        "clock_audit": (
+            "/archive-maint/CHR-05/notes/clock-audit.txt"
+        ),
+        "retired_recovery_note": (
+            "/archive-maint/CHR-05/notes/retired-recovery.txt"
+        ),
+        "legacy_recovery_endpoint": "/api/v0/recover",
         "operator_note": (
-            "The records came from three clock domains. "
-            "Normalize timestamps before ordering events."
+            "Three clock domains were involved in this incident. "
+            "Verify the clock-drift hypothesis against the audit "
+            "before deciding whether it explains the failure."
         )
     })
 
+# -------------------------------------------------------------------
+# CHR-05 evidence: plausible leads that can be verified or rejected
+# -------------------------------------------------------------------
+
+@app.get("/archive-maint/CHR-05/notes/clock-drift.txt")
+def clock_drift_note():
+    note = """\
+S.H.I.E.L.D. TECHNICAL NOTE
+Incident: CHR-05
+Status: UNCONFIRMED HYPOTHESIS
+
+The first review blamed inconsistent event ordering on
+clock drift between the edge gateway, API, and archive.
+
+The displayed timestamps use different UTC offsets.
+Do not compare their displayed clock values directly.
+
+Before changing any configuration, compare the event
+sequence with the archived clock audit.
+
+Reference: /archive-maint/CHR-05/notes/clock-audit.txt
+"""
+    return Response(note, mimetype="text/plain")
+
+
+@app.get("/archive-maint/CHR-05/notes/clock-audit.txt")
+def clock_audit_note():
+    audit = """\
+CHRONOS CLOCK AUDIT
+Incident: CHR-05
+Sample time: 2026-10-20T04:18:00Z
+Clock source: NTP
+
+Measured offsets relative to UTC:
+edge gateway: +7 ms
+chronos API:  +2 ms
+archive node: -4 ms
+
+Maximum observed offset spread: 11 ms
+
+Timeline observations after UTC normalization:
+redeem_received -> receipt_write_started: 51 ms
+receipt_write_started -> response_committed: 59 ms
+
+Finding:
+The normalized events remain in the same order.
+The measured offset spread is smaller than the observed
+separations, so this audit does not support clock drift
+as the explanation for the incident.
+
+This audit describes timestamps only. It does not assess
+the correctness of the authorization workflow.
+"""
+    return Response(audit, mimetype="text/plain")
+
+
+@app.get("/archive-maint/CHR-05/notes/retired-recovery.txt")
+def retired_recovery_note():
+    note = """\
+ARCHIVED RUNBOOK
+Component: Legacy Recovery Panel
+Status: RETIRED
+
+The original recovery panel was used during early
+Chronos interface testing. It could reset local display
+state and show a diagnostic status message.
+
+It did not issue an authorization lease or grant access
+to a protected mission record.
+
+The associated endpoint was retired:
+GET /api/v0/recover
+
+Reference: OVR-19
+No credentials or mission flags are stored in this note.
+"""
+    return Response(note, mimetype="text/plain")
+
+
+@app.route("/api/v0/recover", methods=["GET", "POST"])
+def retired_recovery():
+    return jsonify({
+        "error": "legacy_recovery_retired",
+        "message": (
+            "The v0 recovery handler has been decommissioned. "
+            "It does not authorize access to mission records."
+        ),
+        "incident": "CHR-05"
+    }), 410
 
 @app.get("/api/v1/chronos/status")
 def chronos_status():
