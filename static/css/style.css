@@ -1,0 +1,224 @@
+:root {
+    color-scheme: dark;
+
+    --background: #080d16;
+    --panel: #101927;
+    --text: #d9e4f2;
+    --muted: #8392a8;
+    --green: #71f7c0;
+    --border: #243449;
+}
+
+/* Reset */
+* {
+    box-sizing: border-box;
+}
+
+/* Main browser page */
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    background: var(--background);
+    color: var(--text);
+    font-family: monospace;
+}
+
+/* Entire page shakes together */
+.page-shell {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100vh;
+    padding: 32px 18px;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--background);
+
+    animation: chronos-shake 140ms linear infinite;
+}
+
+/* Chronos temporal instability effect */
+@keyframes chronos-shake {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    20% {
+        transform: translate(-2px, 1px);
+    }
+
+    40% {
+        transform: translate(2px, -1px);
+    }
+
+    60% {
+        transform: translate(-1px, 2px);
+    }
+
+    80% {
+        transform: translate(1px, -2px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* Main terminal panel */
+.terminal {
+    width: min(760px, 100%);
+    border: 1px solid var(--border);
+    background: var(--panel);
+    padding: 28px;
+}
+
+/* Header and footer */
+.top-bar,
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.classification {
+    color: var(--green);
+}
+
+/* Mission section */
+.mission {
+    padding: 72px 0;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* Main heading */
+h1 {
+    margin: 24px 0;
+    font-size: clamp(32px, 7vw, 58px);
+}
+
+h1 span {
+    color: var(--green);
+}
+
+/* Description */
+.description,
+.instruction {
+    max-width: 550px;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+/* Archive status */
+.status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 36px;
+
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+    background: #ffb454;
+}
+
+/* Diagnostic clue: visible, not separately blinking */
+.signal {
+    margin-top: 32px;
+
+    color: var(--green);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Footer */
+footer {
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+}
+
+/* Smaller screens */
+@media (max-width: 600px) {
+    .page-shell {
+        padding: 18px 12px;
+    }
+
+    .terminal {
+        padding: 20px;
+    }
+
+    .mission {
+        padding: 48px 0;
+    }
+}
+
+/* Accessibility: respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .page-shell {
+        animation: none;
+        transform: none;
+    }
+}
+/* Misleading Chronos archive control */
+
+.archive-control {
+    margin-top: 24px;
+    padding: 14px 20px;
+
+    color: var(--green);
+    background: #0b1720;
+    border: 1px solid var(--green);
+
+    font-family: monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    /* Position changes are handled locally */
+    transform: translate(
+        var(--shift-x, 0px),
+        var(--shift-y, 0px)
+    );
+
+    transition: transform 60ms steps(2, end);
+}
+
+.archive-control:hover {
+    background: #142b31;
+}
+
+#interaction-message {
+    min-height: 20px;
+    margin-top: 14px;
+    color: var(--muted);
+    font-family: monospace;
+    font-size: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .archive-control {
+        transition: none;
+    }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Project CHRONOS | Stark Industries</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+   <div class="page-shell">
+  	 <main class="terminal">
+              <header class="top-bar">
+            	<span>STARK INDUSTRIES</span>
+                <span class="classification">CLASSIFIED // CHR-05</span>
+       	      </header>
+
+              <section class="mission">
+            	<p class="eyebrow">TEMPORAL ARCHIVE RECOVERY SYSTEM</p>
+
+            	<h1>PROJECT <span>CHRONOS</span></h1>
+
+            	<p class="description">
+                	The archive timeline is inconsistent.
+               	        Mission records remain sealed pending recovery.
+            	</p>
+
+            	<div class="status">
+                	<span class="status-dot"></span>
+                	ARCHIVE STATUS: DEGRADED
+            	</div>
+
+            	<p class="signal">
+                	SYNC WINDOW: 5000ms // INCIDENT CHR-05
+            	</p>
+
+            	<p class="instruction">
+                	Investigate the archived evidence to restore access.
+            	</p>
+                <button type="button" class="archive-control" id="archive-control">
+   			 ACCESS CLASSIFIED ARCHIVE
+		</button>
+
+   		<p id="interaction-message" aria-live="polite">
+    			TEMPORAL LOCK ACTIVE
+		</p>
+       	      </section>
+
+       	     <footer>
+            	STARK SYSTEMS / TEMPORAL SECURITY DIVISION
+             </footer>
+         </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/chronos.js') }}" defer></script>		
+</body>
+</html>
