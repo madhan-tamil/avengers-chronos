@@ -1,0 +1,22 @@
+# Avengers: Project CHRONOS — The Last Five Seconds
+
+**Category:** Web Exploitation  
+**Difficulty:** Intermediate–Advanced
+
+### Mission Brief
+
+Following the events of the Battle of Earth, S.H.I.E.L.D. recovered a classified temporal archive developed using Stark Industries technology. The archive, known as **Project CHRONOS**, was designed to maintain records of authorized time-travel operations.
+
+Something has gone wrong.
+
+The archive's interface is unstable, its diagnostic messages reference a narrow synchronization window, and its incident logs contain conflicting timestamps. Attempts to access the classified mission records lead nowhere.
+
+Your mission is to investigate the anomalous interface, uncover the clues hidden within the archive, reconstruct the relevant timeline, and find a way to recover the sealed mission record.
+
+Every second matters. The truth is buried somewhere between the requests, the records, and the last five seconds.
+
+**Can you restore the timeline and recover the classified flag?**
+
+**Flag format:** `avengers{...}`
+
+https://avengers-chronos.onrender.com
